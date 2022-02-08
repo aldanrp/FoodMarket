@@ -5,7 +5,7 @@ const ksecondary = Color(0xFFFFFFFF);
 const ksecondary2 = Color(0xFF8D92A3);
 const kblack = Color(0xFF020202);
 const kfalse = Color(0xFFFAFAFC);
-
+const kwhite2 = Color(0xFFF2F2F2);
 const double defaultmargin = 24;
 TextStyle greyFontstyle = GoogleFonts.poppins().copyWith(color: ksecondary2);
 TextStyle blackFontstyle = GoogleFonts.poppins().copyWith(
