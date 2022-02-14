@@ -1,6 +1,6 @@
 part of 'models.dart';
 
-class Food {
+class Food extends Equatable {
   final int id;
   final String picturePath;
   final String name;
@@ -9,7 +9,7 @@ class Food {
   final int price;
   final double rate;
 
-  Food(
+  const Food(
       {required this.id,
       required this.picturePath,
       required this.name,
@@ -24,7 +24,7 @@ class Food {
 }
 
 List<Food> mockFoods = [
-  Food(
+  const Food(
       id: 1,
       picturePath:
           "https://i.pinimg.com/736x/06/7b/28/067b2879e5c9c42ec669bf639c3fbffc.jpg",
@@ -34,7 +34,7 @@ List<Food> mockFoods = [
       ingredients: "Bawang Merah, Paprika, Bawang Bombay, Timun",
       price: 150000,
       rate: 4.2),
-  Food(
+  const Food(
       id: 2,
       picturePath:
           "https://cdns.klimg.com/dream.co.id/resources/news/2020/04/06/133546/bikin-steak-di-rumah-pastikan-bumbunya-meresap-2004066.jpg",
@@ -44,7 +44,7 @@ List<Food> mockFoods = [
       ingredients: "Daging Sapi Korea, Garam, Lada Hitam",
       price: 750000,
       rate: 4.5),
-  Food(
+  const Food(
       id: 3,
       picturePath:
           "https://cdns.klimg.com/dream.co.id/resources/news/2020/04/06/133546/bikin-steak-di-rumah-pastikan-bumbunya-meresap-2004066.jpg",
@@ -54,7 +54,7 @@ List<Food> mockFoods = [
       ingredients: "Jagung, Selada, Tomat Ceri, Keju, Wortel",
       price: 105900,
       rate: 3.9),
-  Food(
+  const Food(
       id: 4,
       picturePath:
           "https://images.immediate.co.uk/production/volatile/sites/2/2016/08/25097.jpg?quality=90&resize=768,574",
@@ -64,7 +64,7 @@ List<Food> mockFoods = [
       ingredients: "Wortel, Seledri, Kacang Tanah, Labu, Garam, Gula",
       price: 60000,
       rate: 4.9),
-  Food(
+  const Food(
       id: 5,
       picturePath:
           "https://cmxpv89733.i.lithium.com/t5/image/serverpage/image-id/478345i84598AB4FEB454CB/image-size/large?v=1.0&px=999",

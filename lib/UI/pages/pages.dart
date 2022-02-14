@@ -3,6 +3,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:restaurant_food/UI/widget/foodwidget/food_card.dart';
+import 'package:restaurant_food/UI/widget/foodwidget/food_items.dart';
+import 'package:restaurant_food/UI/widget/foodwidget/food_tab.dart';
 import 'package:restaurant_food/UI/widget/globalwidget/appbarcostum.dart';
 import 'package:restaurant_food/UI/widget/globalwidget/custom_bottom_nav.dart';
 import 'package:restaurant_food/models/models.dart';

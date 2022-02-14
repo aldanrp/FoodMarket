@@ -8,6 +8,7 @@ class FoodPage extends StatefulWidget {
 }
 
 class _FoodPageState extends State<FoodPage> {
+  int selectIndex = 0;
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -54,8 +55,9 @@ class _FoodPageState extends State<FoodPage> {
               ),
             ),
             //* list of food
-            SizedBox(
+            Container(
               height: 258,
+              padding: const EdgeInsets.only(top: 20, bottom: 20),
               width: double.infinity,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -76,6 +78,50 @@ class _FoodPageState extends State<FoodPage> {
               ),
             ),
             //* List Tabbar
+            Container(
+              width: MediaQuery.of(context).size.width,
+              color: Colors.white,
+              child: Column(
+                children: [
+                  CustomTabbar(
+                    selectIndex: selectIndex,
+                    titles: const ["New Taste", "Popular", "Recommended"],
+                    ontap: (index) {
+                      setState(() {
+                        selectIndex = index;
+                      });
+                    },
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Builder(builder: (_) {
+                    List<Food> body = (selectIndex == 0)
+                        ? mockFoods
+                        : (selectIndex == 1)
+                            ? []
+                            : [];
+
+                    return ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: mockFoods.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: EdgeInsets.only(
+                            top: (index == 0) ? 0 : 10,
+                          ),
+                          child: ItemsFood(itemsFood: mockFoods[index]),
+                        );
+                      },
+                    );
+                  }),
+                  const SizedBox(
+                    height: 80,
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ],

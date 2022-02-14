@@ -15,12 +15,12 @@ class CustomTabbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 50,
       child: Stack(
         children: [
           Container(
-            padding: const EdgeInsets.only(top: 48),
+            margin: const EdgeInsets.only(top: 48),
             height: 1,
             color: kwhite2,
           ),
@@ -28,15 +28,23 @@ class CustomTabbar extends StatelessWidget {
             children: titles
                 .map(
                   (e) => Padding(
-                    padding: const EdgeInsets.only(left: defaultmargin),
+                    padding: const EdgeInsets.only(
+                      left: defaultmargin,
+                    ),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(
-                          e,
-                          style: (titles.indexOf(e) == selectIndex)
-                              ? blackFontstyle3.copyWith(
-                                  fontWeight: FontWeight.w500)
-                              : greyFontstyle,
+                        GestureDetector(
+                          onTap: () {
+                            ontap(titles.indexOf(e));
+                          },
+                          child: Text(
+                            e,
+                            style: (titles.indexOf(e) == selectIndex)
+                                ? blackFontstyle2.copyWith(
+                                    fontWeight: FontWeight.w600)
+                                : greyFontstyle,
+                          ),
                         ),
                         Container(
                           width: 40,
