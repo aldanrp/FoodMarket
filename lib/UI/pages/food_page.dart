@@ -44,11 +44,11 @@ class _FoodPageState extends State<FoodPage> {
                     height: 50,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      // image: const DecorationImage(
-                      //   image: NetworkImage(
-                      //       'https://i.pinimg.com/474x/8a/f4/7e/8af47e18b14b741f6be2ae499d23fcbe.jpg'),
-                      //   fit: BoxFit.cover,
-                      // ),
+                      image: const DecorationImage(
+                        image: NetworkImage(
+                            'https://i.pinimg.com/474x/8a/f4/7e/8af47e18b14b741f6be2ae499d23fcbe.jpg'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ],
@@ -65,13 +65,24 @@ class _FoodPageState extends State<FoodPage> {
                 shrinkWrap: true,
                 itemCount: mockFoods.length,
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.only(
-                      left: (index == 0) ? defaultmargin : 0,
-                      right: defaultmargin,
-                    ),
-                    child: FoodCard(
-                      food: mockFoods[index],
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              DetailsPage(transaction: mockFoods[index]),
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: (index == 0) ? defaultmargin : 0,
+                        right: defaultmargin,
+                      ),
+                      child: FoodCard(
+                        food: mockFoods[index],
+                      ),
                     ),
                   );
                 },
@@ -101,7 +112,6 @@ class _FoodPageState extends State<FoodPage> {
                         : (selectIndex == 1)
                             ? []
                             : [];
-
                     return ListView.builder(
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
@@ -111,7 +121,17 @@ class _FoodPageState extends State<FoodPage> {
                           margin: EdgeInsets.only(
                             top: (index == 0) ? 0 : 10,
                           ),
-                          child: ItemsFood(itemsFood: mockFoods[index]),
+                          child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DetailsPage(
+                                        transaction: mockFoods[index]),
+                                  ),
+                                );
+                              },
+                              child: ItemsFood(itemsFood: mockFoods[index])),
                         );
                       },
                     );

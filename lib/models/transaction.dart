@@ -8,13 +8,13 @@ enum TransactionStatus {
 }
 
 class Transaction extends Equatable {
-  final int id;
-  final Food food;
-  final int quantity;
-  final int total;
-  final DateTime dateTime;
-  final TransactionStatus status;
-  final User user;
+  int id;
+  Food food;
+  int quantity;
+  int total;
+  DateTime dateTime;
+  TransactionStatus status;
+  User user;
 
   Transaction(
       {required this.id,
