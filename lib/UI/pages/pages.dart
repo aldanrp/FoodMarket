@@ -22,3 +22,6 @@ part 'main_page.dart';
 part 'food_page.dart';
 part 'details_page.dart';
 part 'payment_page.dart';
+part 'ilustrationPages/success_order_page.dart';
+part 'ilustrationPages/success_sign_up_pages.dart';
+part 'ilustrationPages/orderempty_pages.dart';

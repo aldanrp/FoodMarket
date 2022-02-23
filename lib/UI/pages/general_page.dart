@@ -37,7 +37,7 @@ class GeneralPage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             horizontal: defaultmargin),
                         width: double.infinity,
-                        height: 100,
+                        height: 80,
                         color: Colors.white,
                         child: (leftcallback == true)
                             ? AppbarCostum(
