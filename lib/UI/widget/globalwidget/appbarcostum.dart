@@ -63,20 +63,13 @@ class AppbarCostum extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    title,
-                    style: GoogleFonts.poppins(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Text(
-                    subtitle,
-                    style: GoogleFonts.poppins(
-                      color: ksecondary2,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
+                  Text(title,
+                      style: blackFontstyle.copyWith(
+                        fontWeight: FontWeight.w600,
+                      )),
+                  Text(subtitle,
+                      style: greyFontstyle.copyWith(
+                          fontWeight: FontWeight.w300, fontSize: 15)),
                 ],
               ),
             ],

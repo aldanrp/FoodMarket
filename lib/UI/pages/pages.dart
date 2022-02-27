@@ -7,10 +7,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:restaurant_food/UI/widget/foodwidget/food_card.dart';
 import 'package:restaurant_food/UI/widget/foodwidget/food_items.dart';
-import 'package:restaurant_food/UI/widget/foodwidget/food_tab.dart';
+import 'package:restaurant_food/UI/widget/globalwidget/costum_tabbar.dart';
 import 'package:restaurant_food/UI/widget/globalwidget/appbarcostum.dart';
 import 'package:restaurant_food/UI/widget/globalwidget/custom_bottom_nav.dart';
 import 'package:restaurant_food/UI/widget/globalwidget/rating_stars.dart';
+import 'package:restaurant_food/UI/widget/orderwidget/order_list_food.dart';
 import 'package:restaurant_food/models/models.dart';
 import 'package:restaurant_food/shared/shared.dart';
 
@@ -25,3 +26,5 @@ part 'payment_page.dart';
 part 'ilustrationPages/success_order_page.dart';
 part 'ilustrationPages/success_sign_up_pages.dart';
 part 'ilustrationPages/orderempty_pages.dart';
+part 'order_history_page.dart';
+part 'profile_page.dart';

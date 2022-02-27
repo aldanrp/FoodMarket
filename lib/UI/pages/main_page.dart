@@ -31,15 +31,13 @@ class _MainPageState extends State<MainPage> {
                 selectedPage = index;
               });
             },
-            children: const [
-              Center(
+            children: [
+              const Center(
                 child: FoodPage(),
               ),
-              Center(
-                child: OrderEmptyPages(),
-              ),
-              Center(
-                child: Text("Profile"),
+              const Center(child: OrderHistoryPage()),
+              ProfilePage(
+                user: mockUser,
               ),
             ],
           )),

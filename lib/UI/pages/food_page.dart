@@ -111,11 +111,11 @@ class _FoodPageState extends State<FoodPage> {
                         ? mockFoods
                         : (selectIndex == 1)
                             ? []
-                            : [];
+                            : mockFoods;
                     return ListView.builder(
                       physics: const BouncingScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: mockFoods.length,
+                      itemCount: body.length,
                       itemBuilder: (context, index) {
                         return Container(
                           margin: EdgeInsets.only(
@@ -131,7 +131,7 @@ class _FoodPageState extends State<FoodPage> {
                                   ),
                                 );
                               },
-                              child: ItemsFood(itemsFood: mockFoods[index])),
+                              child: ItemsFood(itemsFood: body[index])),
                         );
                       },
                     );
