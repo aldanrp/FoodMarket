@@ -50,6 +50,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   widget.user.name,
                   style: blackFontstyle.copyWith(
                     fontWeight: FontWeight.w600,
+                    fontSize: 24,
                   ),
                 ),
                 const SizedBox(
