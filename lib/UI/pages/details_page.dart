@@ -199,13 +199,10 @@ class _DetailsPageState extends State<DetailsPage> {
                               ),
                               child: TextButton(
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => PaymentPage(
-                                          transaction: widget.transaction),
-                                    ),
-                                  );
+                                  Get.to(() => PaymentPage(
+                                        transaction: widget.transaction,
+                                        quantiy: quantity,
+                                      ));
                                 },
                                 child: Text(
                                   'Order Now',

@@ -44,9 +44,11 @@ class _FoodPageState extends State<FoodPage> {
                     height: 50,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      image: const DecorationImage(
+                      image: DecorationImage(
                         image: NetworkImage(
-                            'https://i.pinimg.com/474x/8a/f4/7e/8af47e18b14b741f6be2ae499d23fcbe.jpg'),
+                            (context.read<UserCubit>().state as UserLoaded)
+                                .user
+                                .picturePath),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -59,33 +61,35 @@ class _FoodPageState extends State<FoodPage> {
               height: 258,
               padding: const EdgeInsets.only(top: 20, bottom: 20),
               width: double.infinity,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: mockFoods.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              DetailsPage(transaction: mockFoods[index]),
-                        ),
-                      );
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        left: (index == 0) ? defaultmargin : 0,
-                        right: defaultmargin,
-                      ),
-                      child: FoodCard(
-                        food: mockFoods[index],
-                      ),
-                    ),
-                  );
-                },
+              child: BlocBuilder<FoodCubit, FoodState>(
+                builder: (context, state) => (state is FoodLoaded)
+                    ? ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: state.foods.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Get.to(
+                                () => DetailsPage(
+                                  transaction: state.foods[index],
+                                ),
+                              );
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                left: (index == 0) ? defaultmargin : 0,
+                                right: defaultmargin,
+                              ),
+                              child: FoodCard(
+                                food: state.foods[index],
+                              ),
+                            ),
+                          );
+                        },
+                      )
+                    : Center(child: loadingIndicator),
               ),
             ),
             //* List Tabbar
@@ -106,35 +110,41 @@ class _FoodPageState extends State<FoodPage> {
                   const SizedBox(
                     height: 16,
                   ),
-                  Builder(builder: (_) {
-                    List<Food> body = (selectIndex == 0)
-                        ? mockFoods
-                        : (selectIndex == 1)
-                            ? []
-                            : mockFoods;
-                    return ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: body.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.only(
-                            top: (index == 0) ? 0 : 10,
-                          ),
-                          child: GestureDetector(
+                  BlocBuilder<FoodCubit, FoodState>(builder: (_, state) {
+                    if (state is FoodLoaded) {
+                      List<Food> body = state.foods
+                          .where((element) =>
+                              element.types.contains((selectIndex == 0)
+                                  ? FoodType.newfood
+                                  : (selectIndex == 1)
+                                      ? FoodType.popular
+                                      : FoodType.recommended))
+                          .toList();
+                      return ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: body.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: EdgeInsets.only(
+                              top: (index == 0) ? 0 : 10,
+                            ),
+                            child: GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => DetailsPage(
-                                        transaction: mockFoods[index]),
+                                Get.to(
+                                  () => DetailsPage(
+                                    transaction: body[index],
                                   ),
                                 );
                               },
-                              child: ItemsFood(itemsFood: body[index])),
-                        );
-                      },
-                    );
+                              child: ItemsFood(itemsFood: body[index]),
+                            ),
+                          );
+                        },
+                      );
+                    } else {
+                      return Center(child: loadingIndicator);
+                    }
                   }),
                   const SizedBox(
                     height: 80,

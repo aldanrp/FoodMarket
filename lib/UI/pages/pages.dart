@@ -12,8 +12,10 @@ import 'package:restaurant_food/UI/widget/globalwidget/appbarcostum.dart';
 import 'package:restaurant_food/UI/widget/globalwidget/custom_bottom_nav.dart';
 import 'package:restaurant_food/UI/widget/globalwidget/rating_stars.dart';
 import 'package:restaurant_food/UI/widget/orderwidget/order_list_food.dart';
+import 'package:restaurant_food/cubit/cubit.dart';
 import 'package:restaurant_food/models/models.dart';
 import 'package:restaurant_food/shared/shared.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'general_page.dart';
 part 'sign_up_page.dart';

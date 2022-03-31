@@ -8,6 +8,11 @@ const kfalse = Color(0xFFFAFAFC);
 const kwhite2 = Color(0xFFF2F2F2);
 const double defaultmargin = 24;
 
+Widget loadingIndicator = const SpinKitFadingCircle(
+  size: 45,
+  color: kprimary,
+);
+
 TextStyle greyFontstyle = GoogleFonts.poppins().copyWith(color: ksecondary2);
 
 TextStyle blackFontstyle = GoogleFonts.poppins().copyWith(

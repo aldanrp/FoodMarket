@@ -28,7 +28,7 @@ class User extends Equatable {
 
 User mockUser = const User(
     id: 1,
-    name: 'Jennie Kim',
+    name: 'Aldan',
     address: 'Jalan Jenderal Sudirman',
     city: 'Bandung',
     houseNumber: '1234',

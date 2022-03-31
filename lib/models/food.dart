@@ -1,6 +1,6 @@
 part of 'models.dart';
 
-enum FoodType { new_food, popular, recommended }
+enum FoodType { newfood, popular, recommended }
 
 class Food extends Equatable {
   final int id;
@@ -37,7 +37,7 @@ List<Food> mockFoods = [
       ingredients: "Bawang Merah, Paprika, Bawang Bombay, Timun",
       price: 150000,
       rate: 4.2,
-      types: [FoodType.new_food, FoodType.popular, FoodType.recommended]),
+      types: [FoodType.newfood, FoodType.popular, FoodType.recommended]),
   const Food(
     id: 2,
     picturePath:
@@ -48,6 +48,7 @@ List<Food> mockFoods = [
     ingredients: "Daging Sapi Korea, Garam, Lada Hitam",
     price: 750000,
     rate: 4.5,
+    types: [FoodType.popular],
   ),
   const Food(
       id: 3,
@@ -68,18 +69,19 @@ List<Food> mockFoods = [
       ingredients: "Wortel, Seledri, Kacang Tanah, Labu, Garam, Gula",
       price: 60000,
       rate: 4.9,
-      types: [FoodType.new_food, FoodType.recommended]),
+      types: [FoodType.newfood, FoodType.recommended]),
   const Food(
-      id: 5,
-      picturePath:
-          "https://cmxpv89733.i.lithium.com/t5/image/serverpage/image-id/478345i84598AB4FEB454CB/image-size/large?v=1.0&px=999",
-      name: "Korean Raw Beef Tartare",
-      description:
-          "Daging sapi Korea cincang yang disajikan mentah dan disiram saus spesial dengan toping kuning telur dan taburan biji wijen.",
-      ingredients: "Daging Sapi Korea, Telur, Biji Wijen",
-      price: 350000,
-      rate: 3.4,
-      types: [
-        FoodType.popular,
-      ])
+    id: 5,
+    picturePath:
+        "https://cmxpv89733.i.lithium.com/t5/image/serverpage/image-id/478345i84598AB4FEB454CB/image-size/large?v=1.0&px=999",
+    name: "Korean Raw Beef Tartare",
+    description:
+        "Daging sapi Korea cincang yang disajikan mentah dan disiram saus spesial dengan toping kuning telur dan taburan biji wijen.",
+    ingredients: "Daging Sapi Korea, Telur, Biji Wijen",
+    price: 350000,
+    rate: 3.4,
+    types: [
+      FoodType.popular,
+    ],
+  )
 ];

@@ -37,7 +37,7 @@ class _MainPageState extends State<MainPage> {
               ),
               const Center(child: OrderHistoryPage()),
               ProfilePage(
-                user: mockUser,
+                user: (context.read<UserCubit>().state as UserLoaded).user,
               ),
             ],
           )),

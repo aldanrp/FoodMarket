@@ -78,13 +78,45 @@ class _SignInpageState extends State<SignInpage> {
               height: 45,
               padding: const EdgeInsets.symmetric(horizontal: defaultmargin),
               child: isLoading
-                  ? const SpinKitFadingCircle(
-                      size: 45,
-                      color: kprimary,
-                    )
+                  ? loadingIndicator
                   : TextButton(
-                      onPressed: () {
-                        print("Sign In");
+                      onPressed: () async {
+                        setState(() {
+                          isLoading = true;
+                        });
+
+                        await context.read<UserCubit>().signIn(
+                            emailController.text, passwordController.text);
+                        UserState state = context.read<UserCubit>().state;
+
+                        if (state is UserLoaded) {
+                          context.read<FoodCubit>().getFoods();
+                          context.read<TransactionsCubit>().getTransactions();
+                          Get.to(() => const MainPage());
+                        } else {
+                          Get.snackbar(
+                            '',
+                            '',
+                            backgroundColor: const Color(0xFFD9435E),
+                            icon: const Icon(
+                              Icons.close_rounded,
+                              color: Colors.white,
+                            ),
+                            titleText: Text(
+                              "Sign In Failed ",
+                              style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            messageText: Text(
+                              (state as UserLoadingFailed).message,
+                              style: GoogleFonts.poppins(color: Colors.white),
+                            ),
+                          );
+                          setState(() {
+                            isLoading = false;
+                          });
+                        }
                       },
                       style: TextButton.styleFrom(
                         padding: const EdgeInsets.all(5),
@@ -99,7 +131,7 @@ class _SignInpageState extends State<SignInpage> {
                         ),
                       ),
                       child: Text(
-                        'Sign Up',
+                        'Sign In',
                         style: GoogleFonts.poppins(
                           color: Colors.black,
                           fontWeight: FontWeight.w500,
