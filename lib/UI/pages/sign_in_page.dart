@@ -92,7 +92,10 @@ class _SignInpageState extends State<SignInpage> {
                         if (state is UserLoaded) {
                           context.read<FoodCubit>().getFoods();
                           context.read<TransactionsCubit>().getTransactions();
-                          Get.to(() => const MainPage());
+                          Get.to(() => const MainPage(
+                                selectedPage: 0,
+                              ));
+                          //Get.to(() => const MainPage());
                         } else {
                           Get.snackbar(
                             '',

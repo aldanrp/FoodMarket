@@ -1,7 +1,18 @@
 part of 'pages.dart';
 
 class AddressPage extends StatefulWidget {
-  const AddressPage({Key? key}) : super(key: key);
+  final String name;
+  final String email;
+  final String password;
+  final File pictureFile;
+
+  const AddressPage(
+      {Key? key,
+      required this.name,
+      required this.email,
+      required this.password,
+      required this.pictureFile})
+      : super(key: key);
 
   @override
   State<AddressPage> createState() => _AddressPageState();

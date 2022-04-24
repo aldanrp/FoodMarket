@@ -8,6 +8,10 @@ class SignUppage extends StatefulWidget {
 }
 
 class _SignUppageState extends State<SignUppage> {
+  late User user;
+  String picture = "assets/images/photo_border.png";
+  File? pictureFile;
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
@@ -20,26 +24,48 @@ class _SignUppageState extends State<SignUppage> {
         subtitle: "Register and eat",
         child: Column(
           children: [
-            Container(
-              height: 110,
-              width: 110,
-              margin: const EdgeInsets.only(top: 26),
-              padding: const EdgeInsets.all(10),
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/photo_border.png"),
-                ),
-              ),
+            GestureDetector(
+              onTap: () async {
+                XFile? pickedFile =
+                    await ImagePicker().pickImage(source: ImageSource.gallery);
+
+                if (pickedFile != null) {
+                  setState(() {
+                    pictureFile = File(pickedFile.path);
+                  });
+                }
+              },
               child: Container(
+                height: 110,
+                width: 110,
+                margin: const EdgeInsets.only(top: 26),
+                padding: const EdgeInsets.all(10),
                 decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: NetworkImage(
-                        'https://i.pinimg.com/474x/8a/f4/7e/8af47e18b14b741f6be2ae499d23fcbe.jpg'),
-                    fit: BoxFit.cover,
+                    image: AssetImage("assets/images/photo_border.png"),
                   ),
-                  color: ksecondary2,
                 ),
+                child: (pictureFile != null)
+                    ? Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: FileImage(File(pictureFile!.path)),
+                            fit: BoxFit.cover,
+                          ),
+                          color: ksecondary2,
+                        ),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: AssetImage(picture),
+                            fit: BoxFit.cover,
+                          ),
+                          color: ksecondary2,
+                        ),
+                      ),
               ),
             ),
             Container(
@@ -135,7 +161,21 @@ class _SignUppageState extends State<SignUppage> {
                     )
                   : TextButton(
                       onPressed: () {
-                        Get.to(() => const AddressPage());
+                        if (pictureFile == null) {
+                          Get.to(() => AddressPage(
+                                password: passwordController.text,
+                                pictureFile: File(picture),
+                                name: usernameController.text,
+                                email: emailController.text,
+                              ));
+                        } else {
+                          Get.to(() => AddressPage(
+                                password: passwordController.text,
+                                pictureFile: File(pictureFile!.path),
+                                name: usernameController.text,
+                                email: emailController.text,
+                              ));
+                        }
                       },
                       style: TextButton.styleFrom(
                         padding: const EdgeInsets.all(5),

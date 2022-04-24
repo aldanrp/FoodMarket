@@ -279,61 +279,63 @@ class _PaymentPageState extends State<PaymentPage> {
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
-                  margin: const EdgeInsets.only(top: 10, bottom: 20),
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: kprimary,
-                  ),
-                  child: TextButton(
-                    onPressed: () async {
-                      setState(() {
-                        isLoading = true;
-                      });
-                      bool result = await context
-                          .read<TransactionsCubit>()
-                          .submitTransaction(Transaction(
-                              id: 1,
-                              food: widget.transaction,
-                              quantity: widget.quantiy,
-                              total: total,
-                              dateTime: DateTime.now(),
-                              status: TransactionStatus.pending,
-                              user: user));
-                      if (result == true) {
-                        Get.to(() => const SuccessOrderPages());
-                      } else {
-                        setState(() {
-                          isLoading = false;
-                        });
-                        Get.snackbar("", "",
-                            backgroundColor: const Color(0xFFD9435E),
-                            icon: const Icon(Icons.close_rounded,
-                                color: Colors.white),
-                            titleText: Text(
-                              "Transaction Failde",
-                              style: GoogleFonts.poppins(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            messageText: Text(
-                              "Please Try again later...",
-                              style: GoogleFonts.poppins(
-                                color: Colors.white,
-                              ),
-                            ));
-                      }
-                    },
-                    child: Text(
-                      'Checkout Now',
-                      style:
-                          blackFontstyle3.copyWith(fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                ),
+                (isLoading == true)
+                    ? Center(child: loadingIndicator)
+                    : Container(
+                        margin: const EdgeInsets.only(top: 10, bottom: 20),
+                        width: MediaQuery.of(context).size.width,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: kprimary,
+                        ),
+                        child: TextButton(
+                          onPressed: () async {
+                            setState(() {
+                              isLoading = true;
+                            });
+                            bool result = await context
+                                .read<TransactionsCubit>()
+                                .submitTransaction(Transaction(
+                                    id: 1,
+                                    food: widget.transaction,
+                                    quantity: widget.quantiy,
+                                    total: total,
+                                    dateTime: DateTime.now(),
+                                    status: TransactionStatus.pending,
+                                    user: user));
+                            if (result == true) {
+                              Get.to(() => const SuccessOrderPages());
+                            } else {
+                              setState(() {
+                                isLoading = false;
+                              });
+                              Get.snackbar("", "",
+                                  backgroundColor: const Color(0xFFD9435E),
+                                  icon: const Icon(Icons.close_rounded,
+                                      color: Colors.white),
+                                  titleText: Text(
+                                    "Transaction Failde",
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  messageText: Text(
+                                    "Please Try again later...",
+                                    style: GoogleFonts.poppins(
+                                      color: Colors.white,
+                                    ),
+                                  ));
+                            }
+                          },
+                          child: Text(
+                            'Checkout Now',
+                            style: blackFontstyle3.copyWith(
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                      ),
               ],
             ),
           ),

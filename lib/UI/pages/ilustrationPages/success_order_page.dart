@@ -51,7 +51,11 @@ class SuccessOrderPages extends StatelessWidget {
                   color: kprimary,
                 ),
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.offAll(() => const MainPage(
+                          selectedPage: 0,
+                        ));
+                  },
                   child: Text(
                     'Order Other Foods',
                     style:
@@ -68,7 +72,12 @@ class SuccessOrderPages extends StatelessWidget {
                   color: ksecondary2.withOpacity(0.7),
                 ),
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.offAll(() => const MainPage(
+                          selectedPage: 1,
+                        ));
+                    //Get.offAll(() => const MainPage());
+                  },
                   child: Text(
                     'View My Order',
                     style: blackFontstyle2.copyWith(
