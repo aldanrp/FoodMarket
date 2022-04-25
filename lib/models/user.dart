@@ -1,26 +1,37 @@
 part of 'models.dart';
 
 class User extends Equatable {
-  final int id;
-  final String name;
-  final String email;
-  final String address;
-  final String houseNumber;
-  final String phoneNumber;
-  final String city;
-  final String picturePath;
+  int? id;
+  String name;
+  String email;
+  String address;
+  String houseNumber;
+  String phoneNumber;
+  String city;
+  String? picturePath;
   static String? token;
 
-  const User({
-    required this.id,
+  User({
+    this.id,
     required this.name,
     required this.email,
     required this.address,
     required this.houseNumber,
     required this.phoneNumber,
     required this.city,
-    required this.picturePath,
+    this.picturePath,
   });
+
+  factory User.fromJson(Map<String, dynamic> json) => User(
+        id: json["id"],
+        name: json["name"],
+        email: json["email"],
+        address: json["address"],
+        houseNumber: json["houseNumber"],
+        phoneNumber: json["phoneNumber"],
+        city: json["city"],
+        picturePath: json["profile_photo_url"],
+      );
 
   User copyWith({
     final int? id,
@@ -48,7 +59,7 @@ class User extends Equatable {
       [id, name, email, address, houseNumber, phoneNumber, city, picturePath];
 }
 
-User mockUser = const User(
+User mockUser = User(
     id: 1,
     name: 'Aldan',
     address: 'Jalan Jenderal Sudirman',

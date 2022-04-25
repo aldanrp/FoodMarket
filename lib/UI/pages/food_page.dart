@@ -48,7 +48,8 @@ class _FoodPageState extends State<FoodPage> {
                         image: NetworkImage(
                             (context.read<UserCubit>().state as UserLoaded)
                                 .user
-                                .picturePath),
+                                .picturePath
+                                .toString()),
                         fit: BoxFit.cover,
                       ),
                     ),

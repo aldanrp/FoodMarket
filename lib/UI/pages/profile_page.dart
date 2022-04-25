@@ -36,7 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                        image: NetworkImage(widget.user.picturePath),
+                        image: NetworkImage(widget.user.picturePath.toString()),
                         fit: BoxFit.cover,
                       ),
                       color: ksecondary2,

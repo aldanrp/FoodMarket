@@ -141,6 +141,7 @@ class _SignUppageState extends State<SignUppage> {
                 border: Border.all(color: kblack),
               ),
               child: TextField(
+                obscureText: true,
                 controller: passwordController,
                 decoration: InputDecoration(
                   border: InputBorder.none,

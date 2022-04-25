@@ -24,9 +24,17 @@ class _AddressPageState extends State<AddressPage> {
   TextEditingController houseController = TextEditingController();
   TextEditingController cityController = TextEditingController();
   bool isLoading = false;
-  var _valFriends;
+  late List<String> cities;
+  var selectedCity;
 
-  final List _city = ["Jakarta", "Bandung", "Surabaya", "Bali"];
+  @override
+  void initState() {
+    super.initState();
+
+    cities = ["Jakarta", "Bandung", "Surabaya", "Bali"];
+
+    selectedCity = cities[0];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -142,8 +150,8 @@ class _AddressPageState extends State<AddressPage> {
                     "Select your city",
                     style: greyFontstyle,
                   ),
-                  value: _valFriends,
-                  items: _city.map((value) {
+                  value: selectedCity,
+                  items: cities.map((value) {
                     return DropdownMenuItem(
                       child: Text(
                         value,
@@ -154,7 +162,7 @@ class _AddressPageState extends State<AddressPage> {
                   }).toList(),
                   onChanged: (value) {
                     setState(() {
-                      _valFriends = value;
+                      selectedCity = value;
                     });
                   },
                 )),
@@ -169,8 +177,57 @@ class _AddressPageState extends State<AddressPage> {
                       color: kprimary,
                     )
                   : TextButton(
-                      onPressed: () {
-                        print('Sign Up now');
+                      onPressed: () async {
+                        User user = User(
+                          name: widget.name,
+                          email: widget.email,
+                          address: addressController.text,
+                          houseNumber: houseController.text,
+                          phoneNumber: phoneController.text,
+                          city: selectedCity,
+                        );
+
+                        setState(() {
+                          isLoading = true;
+                        });
+
+                        await context.read<UserCubit>().signUp(
+                            user, widget.password,
+                            pictureFile: widget.pictureFile);
+
+                        UserState state = context.read<UserCubit>().state;
+
+                        if (state is UserLoaded) {
+                          context.read<FoodCubit>().getFoods();
+                          context.read<TransactionsCubit>().getTransactions();
+                          Get.to(() => const MainPage(
+                                selectedPage: 0,
+                              ));
+                          //Get.to(() => const MainPage());
+                        } else {
+                          Get.snackbar(
+                            '',
+                            '',
+                            backgroundColor: const Color(0xFFD9435E),
+                            icon: const Icon(
+                              Icons.close_rounded,
+                              color: Colors.white,
+                            ),
+                            titleText: Text(
+                              "Sign In Failed ",
+                              style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            messageText: Text(
+                              (state as UserLoadingFailed).message,
+                              style: GoogleFonts.poppins(color: Colors.white),
+                            ),
+                          );
+                          setState(() {
+                            isLoading = false;
+                          });
+                        }
                       },
                       style: TextButton.styleFrom(
                         padding: const EdgeInsets.all(5),

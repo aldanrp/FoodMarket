@@ -10,34 +10,46 @@ class UserServices {
   }
 
   static Future<ApiReturnValue<User>> signUp(User user, String password,
-      {File? pictureFile, http.Client? client}) async {
-    client ??= http.Client();
+      {required File pictureFile}) async {
+    Uri url =
+        Uri.parse('http://foodmarket-backend.buildwithangga.id/api/register');
 
-    Uri url = Uri.parse(baseUrlUser + 'register');
-
+    var data = json.encode(<String, String>{
+      'name': user.name,
+      'email': user.email,
+      'password': password,
+      'password_confirmation': password,
+      'address': user.address,
+      'city': user.city,
+      'houseNumber': user.houseNumber,
+      'phoneNumber': user.phoneNumber
+    });
+    print(data);
     try {
-      var response = await client.post(url,
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode(<String, String>{
-            'name': user.name,
-            'email': user.email,
-            'password': password,
-            'password_confirmation': password,
-            'address': user.address,
-            'city': user.city,
-            'houseNumber': user.houseNumber,
-            'phoneNumber': user.phoneNumber
-          }));
+      var response = await http.post(
+        url,
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(<String, String>{
+          'name': user.name,
+          'email': user.email,
+          'password': password,
+          'password_confirmation': password,
+          'address': user.address,
+          'city': user.city,
+          'houseNumber': user.houseNumber,
+          'phoneNumber': user.phoneNumber
+        }),
+      );
 
       var data = jsonDecode(response.body);
 
       if (response.statusCode != 200) {
-        throw data['data']['message'];
+        print(data['data']['message']);
       }
 
       User.token = data['data']['access_token'];
-      User value = data['data']['user'];
-
+      User value = User.fromJson(data['data']['user']);
+      print(data);
       if (pictureFile != null) {
         var msg = 'data aman';
         try {
@@ -54,6 +66,7 @@ class UserServices {
 
       return ApiReturnValue(message: 'Data Berhasil dimasukan ', value: value);
     } catch (error) {
+      print(error.toString());
       rethrow;
     }
   }

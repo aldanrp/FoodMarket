@@ -20,7 +20,8 @@ class UserCubit extends Cubit<UserState> {
     }
   }
 
-  Future<void> signUp(User user, String password, {File? pictureFile}) async {
+  Future<void> signUp(User user, String password,
+      {required File pictureFile}) async {
     var msg = "aman";
     ApiReturnValue<User> result;
     try {
