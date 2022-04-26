@@ -8,7 +8,7 @@ enum TransactionStatus {
 }
 
 class Transaction extends Equatable {
-  int id;
+  int? id;
   Food food;
   int quantity;
   int total;
@@ -17,7 +17,7 @@ class Transaction extends Equatable {
   User user;
 
   Transaction(
-      {required this.id,
+      {this.id,
       required this.food,
       required this.quantity,
       required this.total,

@@ -116,7 +116,7 @@ class _FoodPageState extends State<FoodPage> {
                       List<Food> body = state.foods
                           .where((element) =>
                               element.types.contains((selectIndex == 0)
-                                  ? FoodType.newfood
+                                  ? FoodType.new_food
                                   : (selectIndex == 1)
                                       ? FoodType.popular
                                       : FoodType.recommended))

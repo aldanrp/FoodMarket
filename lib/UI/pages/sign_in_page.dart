@@ -11,6 +11,8 @@ class _SignInpageState extends State<SignInpage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
+  bool _isObscure = true;
+
   @override
   Widget build(BuildContext context) {
     return GeneralPage(
@@ -58,17 +60,27 @@ class _SignInpageState extends State<SignInpage> {
             Container(
               width: double.infinity,
               margin: const EdgeInsets.symmetric(horizontal: defaultmargin),
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: kblack),
               ),
               child: TextField(
+                obscureText: _isObscure,
                 controller: passwordController,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   hintStyle: greyFontstyle,
                   hintText: 'type your password',
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                        _isObscure ? Icons.visibility : Icons.visibility_off),
+                    onPressed: () {
+                      setState(() {
+                        _isObscure = !_isObscure;
+                      });
+                    },
+                  ),
                 ),
               ),
             ),
@@ -84,19 +96,20 @@ class _SignInpageState extends State<SignInpage> {
                         setState(() {
                           isLoading = true;
                         });
+                        try {
+                          await context.read<UserCubit>().signIn(
+                              emailController.text, passwordController.text);
+                          UserState state = context.read<UserCubit>().state;
 
-                        await context.read<UserCubit>().signIn(
-                            emailController.text, passwordController.text);
-                        UserState state = context.read<UserCubit>().state;
-
-                        if (state is UserLoaded) {
-                          context.read<FoodCubit>().getFoods();
-                          context.read<TransactionsCubit>().getTransactions();
-                          Get.to(() => const MainPage(
-                                selectedPage: 0,
-                              ));
-                          //Get.to(() => const MainPage());
-                        } else {
+                          if (state is UserLoaded) {
+                            context.read<FoodCubit>().getFoods();
+                            context.read<TransactionsCubit>().getTransactions();
+                            Get.to(() => const MainPage(
+                                  selectedPage: 0,
+                                ));
+                            //Get.to(() => const MainPage());
+                          }
+                        } catch (e) {
                           Get.snackbar(
                             '',
                             '',
@@ -112,14 +125,14 @@ class _SignInpageState extends State<SignInpage> {
                                   fontWeight: FontWeight.w600),
                             ),
                             messageText: Text(
-                              (state as UserLoadingFailed).message,
+                              e.toString(),
                               style: GoogleFonts.poppins(color: Colors.white),
                             ),
                           );
-                          setState(() {
-                            isLoading = false;
-                          });
                         }
+                        setState(() {
+                          isLoading = false;
+                        });
                       },
                       style: TextButton.styleFrom(
                         padding: const EdgeInsets.all(5),
