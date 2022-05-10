@@ -15,15 +15,18 @@ class Transaction extends Equatable {
   DateTime dateTime;
   TransactionStatus status;
   User user;
+  String? paymentUrl;
 
-  Transaction(
-      {this.id,
-      required this.food,
-      required this.quantity,
-      required this.total,
-      required this.dateTime,
-      required this.status,
-      required this.user});
+  Transaction({
+    this.id,
+    required this.food,
+    required this.quantity,
+    required this.total,
+    required this.dateTime,
+    required this.status,
+    required this.user,
+    this.paymentUrl,
+  });
 
   Transaction copyWith(
       {int? id,
@@ -42,6 +45,23 @@ class Transaction extends Equatable {
         status: status ?? this.status,
         user: user ?? this.user);
   }
+
+  factory Transaction.fromJson(Map<String, dynamic> data) => Transaction(
+        id: data['id'],
+        food: Food.fromJson(data['food']),
+        quantity: data['quantity'],
+        total: data['total'],
+        dateTime: DateTime.fromMillisecondsSinceEpoch(data['created_at']),
+        status: (data['status'] == 'PENDING')
+            ? TransactionStatus.pending
+            : (data['status'] == 'DELIVERED')
+                ? TransactionStatus.delivered
+                : (data['status'] == 'CANCELLED')
+                    ? TransactionStatus.cancelled
+                    : TransactionStatus.on_delivery,
+        paymentUrl: data['payment_url'],
+        user: User.fromJson(data['user']),
+      );
 
   @override
   List<Object?> get props =>

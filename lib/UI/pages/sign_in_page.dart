@@ -103,7 +103,32 @@ class _SignInpageState extends State<SignInpage> {
 
                           if (state is UserLoaded) {
                             context.read<FoodCubit>().getFoods();
-                            context.read<TransactionsCubit>().getTransactions();
+                            try {
+                              context
+                                  .read<TransactionsCubit>()
+                                  .getTransactions();
+                            } catch (e) {
+                              Get.snackbar(
+                                '',
+                                '',
+                                backgroundColor: const Color(0xFFD9435E),
+                                icon: const Icon(
+                                  Icons.close_rounded,
+                                  color: Colors.white,
+                                ),
+                                titleText: Text(
+                                  "Gagal mendapatkan data transaksi ",
+                                  style: GoogleFonts.poppins(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                messageText: Text(
+                                  e.toString(),
+                                  style:
+                                      GoogleFonts.poppins(color: Colors.white),
+                                ),
+                              );
+                            }
                             Get.to(() => const MainPage(
                                   selectedPage: 0,
                                 ));

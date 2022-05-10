@@ -21,56 +21,82 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
             return GeneralPage(
                 title: 'You Orders',
                 subtitle: 'wait for the best meal',
-                child: Column(
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      color: Colors.white,
-                      child: Column(
-                        children: [
-                          CustomTabbar(
-                            selectIndex: selectIndex,
-                            titles: const ['In Progress', 'Past Orders'],
-                            ontap: (index) {
-                              setState(() {
-                                selectIndex = index;
-                              });
-                            },
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          Builder(builder: (_) {
-                            List<Transaction> transaction = (selectIndex == 0)
-                                ? state.transactions
-                                    .where((element) =>
-                                        element.status ==
-                                            TransactionStatus.on_delivery ||
-                                        element.status ==
-                                            TransactionStatus.pending)
-                                    .toList()
-                                : state.transactions
-                                    .where((element) =>
-                                        element.status ==
-                                            TransactionStatus.delivered ||
-                                        element.status ==
-                                            TransactionStatus.cancelled)
-                                    .toList();
-                            return Column(
-                              children: transaction
-                                  .map((e) => Padding(
-                                        padding: const EdgeInsets.only(
-                                            right: defaultmargin, bottom: 16),
-                                        child:
-                                            OrderItemsFood(transactionfood: e),
-                                      ))
-                                  .toList(),
-                            );
-                          })
-                        ],
-                      ),
-                    )
-                  ],
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    await context.read<TransactionsCubit>().getTransactions();
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        color: Colors.white,
+                        child: Column(
+                          children: [
+                            CustomTabbar(
+                              selectIndex: selectIndex,
+                              titles: const ['In Progress', 'Past Orders'],
+                              ontap: (index) {
+                                setState(() {
+                                  selectIndex = index;
+                                });
+                              },
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            Builder(
+                              builder: (_) {
+                                List<Transaction> transaction = (selectIndex ==
+                                        0)
+                                    ? state.transactions
+                                        .where((element) =>
+                                            element.status ==
+                                                TransactionStatus.on_delivery ||
+                                            element.status ==
+                                                TransactionStatus.pending)
+                                        .toList()
+                                    : state.transactions
+                                        .where((element) =>
+                                            element.status ==
+                                                TransactionStatus.delivered ||
+                                            element.status ==
+                                                TransactionStatus.cancelled)
+                                        .toList();
+                                return Column(
+                                  children: transaction
+                                      .map(
+                                        (e) => Padding(
+                                          padding: const EdgeInsets.only(
+                                            right: defaultmargin,
+                                            bottom: 16,
+                                          ),
+                                          child: GestureDetector(
+                                              onTap: () async {
+                                                if (e.status ==
+                                                    TransactionStatus.pending) {
+                                                  await launchUrl(
+                                                    Uri.parse(
+                                                      e.paymentUrl.toString(),
+                                                    ),
+                                                  );
+                                                }
+                                              },
+                                              child: OrderItemsFood(
+                                                  transactionfood: e)),
+                                        ),
+                                      )
+                                      .toList(),
+                                );
+                              },
+                            ),
+                            const SizedBox(
+                              height: 60,
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 backColor: ksecondary,
                 leftcallback: false);

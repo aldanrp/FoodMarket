@@ -19,6 +19,7 @@ import 'package:restaurant_food/models/models.dart';
 import 'package:restaurant_food/services/services.dart';
 import 'package:restaurant_food/shared/shared.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 part 'general_page.dart';
 part 'sign_up_page.dart';
@@ -33,3 +34,4 @@ part 'ilustrationPages/success_sign_up_pages.dart';
 part 'ilustrationPages/orderempty_pages.dart';
 part 'order_history_page.dart';
 part 'profile_page.dart';
+part 'payment_method_page.dart';

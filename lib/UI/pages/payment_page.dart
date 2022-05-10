@@ -294,39 +294,47 @@ class _PaymentPageState extends State<PaymentPage> {
                             setState(() {
                               isLoading = true;
                             });
-                            bool result = await context
-                                .read<TransactionsCubit>()
-                                .submitTransaction(Transaction(
-                                    id: 1,
-                                    food: widget.transaction,
-                                    quantity: widget.quantiy,
-                                    total: total,
-                                    dateTime: DateTime.now(),
-                                    status: TransactionStatus.pending,
-                                    user: user));
-                            if (result == true) {
-                              Get.to(() => const SuccessOrderPages());
-                            } else {
+                            try {
+                              String? result = await context
+                                  .read<TransactionsCubit>()
+                                  .submitTransaction(
+                                    Transaction(
+                                      food: widget.transaction,
+                                      quantity: widget.quantiy,
+                                      total: total,
+                                      dateTime: DateTime.now(),
+                                      status: TransactionStatus.pending,
+                                      user: user,
+                                    ),
+                                  );
+                              if (result != null) {
+                                Get.to(() =>
+                                    PaymentMethodsPage(paymentUrl: result));
+                              }
+                            } catch (e) {
                               setState(() {
                                 isLoading = false;
                               });
-                              Get.snackbar("", "",
-                                  backgroundColor: const Color(0xFFD9435E),
-                                  icon: const Icon(Icons.close_rounded,
-                                      color: Colors.white),
-                                  titleText: Text(
-                                    "Transaction Failde",
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                              Get.snackbar(
+                                "",
+                                "",
+                                backgroundColor: const Color(0xFFD9435E),
+                                icon: const Icon(Icons.close_rounded,
+                                    color: Colors.white),
+                                titleText: Text(
+                                  "Transaction Failed",
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
                                   ),
-                                  messageText: Text(
-                                    "Please Try again later...",
-                                    style: GoogleFonts.poppins(
-                                      color: Colors.white,
-                                    ),
-                                  ));
+                                ),
+                                messageText: Text(
+                                  "Please Try again later...",
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              );
                             }
                           },
                           child: Text(
